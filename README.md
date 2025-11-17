@@ -171,6 +171,73 @@ You talk to Claude in natural language. Claude handles all the commands, git ope
 
 For technical details, see [CLAUDE.md](./CLAUDE.md).
 
+## Example: Real-World Project Setup
+
+Here's a real example from a Flutter mobile app project (this workflow works for **any** stack - web, backend, desktop, mobile, etc.):
+
+### 1. Create Repository and Add Specifications
+
+- Use this template to create a new repository
+- Clone it locally
+- Add your PRD, TAD, and specs to `docs/` as outlined in the README
+
+### 2. Launch Claude Code and Initialize
+
+Open Claude Code in your project directory, then:
+
+```
+You: "Initialize the project"
+```
+
+Claude reads your docs and configures everything automatically.
+
+### 3. Generate Work Breakdown
+
+Claude will ask: *"Ready to break down your PRD into tasks?"*
+
+```
+You: "Yes"
+```
+
+Claude creates all GitHub issues (epics + tasks) with proper dependencies.
+
+### 4. Define Repository Structure
+
+For multi-component projects (app, backend, infrastructure, etc.):
+
+```
+You: "I want the Flutter app in an 'app' folder (not the repo root). Same for
+other components like Supabase. Create a repository structure spec in docs/specs
+by analyzing the PRD, TAD, and other specs to figure out a clean directory
+structure. Make sure CLAUDE.md knows about this spec for future sessions."
+```
+
+Claude generates the spec and ensures all future work follows it.
+
+### 5. Create Expert Sub-Agents
+
+For complex projects needing specialized expertise:
+
+```
+You: "Create a high-priority epic to analyze all our specs, epics, and tasks,
+then determine what expert sub-agents we should create. We want to use specialized
+agents wherever possible. Add tasks to create those sub-agents."
+```
+
+Claude identifies needed expertise (e.g., Flutter UI, Supabase backend, state management) and creates specialized agents.
+
+### 6. Continue Setup or Start Building
+
+From here, you can continue with project-specific setup or jump straight into development:
+
+```
+You: "Let's work on issue #5"
+```
+
+And you're building!
+
+**Key Takeaway:** This exact workflow adapts to any tech stack - React, Python, Rust, mobile, microservices, etc. You define what you're building in your PRD/TAD, and the workflow handles the rest.
+
 ## Customization Guide
 
 ### 1. Project Context (CLAUDE.md)
