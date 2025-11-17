@@ -80,7 +80,7 @@ That's it! Your project is initialized and ready to start building.
 
 **Already have a project?** You can apply this workflow to existing projects, even if you're already using GitHub issues or tracking work in docs.
 
-See **[docs/MIGRATION.md](docs/MIGRATION.md)** for detailed guidance, or run:
+See **[MIGRATION.md](MIGRATION.md)** for detailed guidance, or run:
 
 ```bash
 /project-migrate

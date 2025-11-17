@@ -32,7 +32,7 @@ Commands for initializing and migrating projects.
 - **Description**: Interactive assistant that helps migrate existing projects to the CCPM workflow. Handles various scenarios: existing GitHub issues, work tracked in docs, mixed tracking, or no formal tracking. Imports issues, creates BEADS entries, generates minimal PRD/TAD if needed, and handles work in progress.
 - **When to use**: When applying this workflow to an existing project
 - **Output**: Migrated GitHub issues, BEADS tracking setup, updated documentation, migration summary
-- **Reference**: See [docs/MIGRATION.md](../docs/MIGRATION.md) for detailed scenarios and prompt templates
+- **Reference**: See [MIGRATION.md](../MIGRATION.md) for detailed scenarios and prompt templates
 
 ## Context Commands
 

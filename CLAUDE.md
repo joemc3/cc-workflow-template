@@ -75,7 +75,7 @@ gh pr list                                # Open pull requests
 
 **If migrating an existing project:**
 - User will say "Migrate the project" or run `/project-migrate`
-- See docs/MIGRATION.md for guidance
+- See MIGRATION.md for guidance
 - Follow the migration workflow (one-time setup)
 - After migration, skip to Step 1 for all future sessions
 

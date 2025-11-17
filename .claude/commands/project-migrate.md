@@ -239,7 +239,7 @@ If they have uncommitted changes or open PRs:
 
 - **Ask before executing destructive actions** (creating many issues, labeling, closing issues)
 - **Show what you'll do before doing it** when working with GitHub issues
-- **If user is unsure about something,** refer them to docs/MIGRATION.md scenarios
+- **If user is unsure about something,** refer them to MIGRATION.md scenarios
 - **If BEADS commands fail,** check that PATH is set and bd is installed
 - **Keep commits logical:** separate migration structure from documentation updates
 - **Validate at each step:** Don't proceed if something fails
