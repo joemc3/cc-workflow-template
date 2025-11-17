@@ -62,27 +62,91 @@ gh pr list                                # Open pull requests
 
 **IMPORTANT: Run these steps AUTOMATICALLY at the start of EVERY session:**
 
-1. Set PATH and sync:
-   ```bash
-   export PATH="$PATH:/Users/joemc3/.local/bin"
-   git pull --rebase
-   ~/.local/bin/bd sync
-   ```
+### Step 0: Check if Project Needs Initialization
 
-2. Show available work:
-   ```bash
-   ~/.local/bin/bd ready --limit 5
-   ~/.local/bin/bd blocked
-   ```
+**Before anything else, check if this is an uninitialized project:**
 
-3. Load project context:
-   ```bash
-   /context:prime
-   ```
+```bash
+# Check if CLAUDE.md contains placeholder text
+grep -q "\[YOUR_PROJECT\]" CLAUDE.md
+```
 
-4. Ask user: "Which issue would you like to work on?"
-   - If GitHub issue number provided: `/pm:issue-start <number>` (creates feature branch + worktree)
-   - If BEADS ID provided: `bd update <id> --status in_progress` and create feature branch manually
+**If placeholders found:**
+
+Check if PRD and TAD are filled in:
+- Read `docs/PRD.md` - does it have real content or placeholder text?
+- Read `docs/TAD.md` - does it have real content or placeholder text?
+
+**Scenario 1: PRD/TAD filled in, project not initialized**
+```
+👋 Welcome! I notice this is a new project.
+
+I can see you've filled in your PRD and TAD.
+Would you like me to initialize the project configuration automatically?
+
+This will:
+- Extract project details from your documents
+- Update CLAUDE.md with your project specifics
+- Create a project-specific README
+- Set up the development workflow
+
+Initialize now? (yes/no)
+```
+
+If yes: Run `/project:init` and stop here (initialization will guide next steps)
+If no: Skip initialization, continue with normal session start
+
+**Scenario 2: PRD/TAD are placeholders**
+```
+👋 Welcome to your new Claude Code project!
+
+To get started, please fill in:
+1. docs/PRD.md - Your product requirements (what you're building)
+2. docs/TAD.md - Your technical architecture (how you're building it)
+
+Would you like help creating these documents? I can:
+a) Interview you and create the PRD together
+b) Help design the technical architecture
+c) Skip for now (you'll fill them in manually)
+
+What would you prefer?
+```
+
+Handle user's choice, then stop (wait for docs to be ready).
+
+**Scenario 3: Already initialized (no placeholders)**
+Continue with normal session start below.
+
+---
+
+### Step 1: Set PATH and Sync
+
+```bash
+export PATH="$PATH:/Users/joemc3/.local/bin"
+git pull --rebase
+~/.local/bin/bd sync
+```
+
+### Step 2: Show Available Work
+
+```bash
+~/.local/bin/bd ready --limit 5
+~/.local/bin/bd blocked
+```
+
+### Step 3: Load Project Context
+
+```bash
+/context:prime
+```
+
+### Step 4: Ask User What to Work On
+
+**Ask:** "Which issue would you like to work on?"
+
+- If GitHub issue number provided: `/pm:issue-start <number>` (creates feature branch + worktree)
+- If BEADS ID provided: `bd update <id> --status in_progress` and create feature branch manually
+- If user says "break down the PRD": Run `/pm:epic-breakdown`
 
 ## During Development
 
@@ -340,6 +404,9 @@ Always reference issues:
 **Note:** BEADS CLI is at `~/.local/bin/bd` - use full path in all commands
 
 ```bash
+# Project Setup (Run Once)
+/project:init                             # Initialize project from PRD/TAD (auto-detected)
+
 # Epic & Task Management (CCPM Slash Commands)
 /pm:epic-breakdown                        # Break down PRD into epics & tasks (auto)
 /pm:task-create "..." --parent N --priority P  # Create new task
