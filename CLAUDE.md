@@ -62,60 +62,19 @@ gh pr list                                # Open pull requests
 
 **IMPORTANT: Run these steps AUTOMATICALLY at the start of EVERY session:**
 
-### Step 0: Check if Project Needs Initialization
+### Step 0: Project Initialization (First Time Only)
 
-**Before anything else, check if this is an uninitialized project:**
+**If user says "Initialize the project" or similar:**
+- Run `/project:init` command (see slash commands section)
+- This only needs to happen once per project
+- After initialization, skip to Step 1 for all future sessions
 
-```bash
-# Check if CLAUDE.md contains placeholder text
-grep -q "\[YOUR_PROJECT\]" CLAUDE.md
-```
+**If this is a new, uninitialized project:**
+- User will say "Initialize the project" when ready
+- Wait for user instruction before initializing
 
-**If placeholders found:**
-
-Check if PRD and TAD are filled in:
-- Read `docs/PRD.md` - does it have real content or placeholder text?
-- Read `docs/TAD.md` - does it have real content or placeholder text?
-
-**Scenario 1: PRD/TAD filled in, project not initialized**
-```
-👋 Welcome! I notice this is a new project.
-
-I can see you've filled in your PRD and TAD.
-Would you like me to initialize the project configuration automatically?
-
-This will:
-- Extract project details from your documents
-- Update CLAUDE.md with your project specifics
-- Create a project-specific README
-- Set up the development workflow
-
-Initialize now? (yes/no)
-```
-
-If yes: Run `/project:init` and stop here (initialization will guide next steps)
-If no: Skip initialization, continue with normal session start
-
-**Scenario 2: PRD/TAD are placeholders**
-```
-👋 Welcome to your new Claude Code project!
-
-To get started, please fill in:
-1. docs/PRD.md - Your product requirements (what you're building)
-2. docs/TAD.md - Your technical architecture (how you're building it)
-
-Would you like help creating these documents? I can:
-a) Interview you and create the PRD together
-b) Help design the technical architecture
-c) Skip for now (you'll fill them in manually)
-
-What would you prefer?
-```
-
-Handle user's choice, then stop (wait for docs to be ready).
-
-**Scenario 3: Already initialized (no placeholders)**
-Continue with normal session start below.
+**If project is already initialized:**
+- Continue with normal session start below (Steps 1-4)
 
 ---
 

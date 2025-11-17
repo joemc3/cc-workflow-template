@@ -61,12 +61,11 @@ This repository provides a complete, battle-tested workflow for managing softwar
 
 3. **Open Claude Code in the project directory**
 
-   Claude will automatically detect this is a new project and say:
+4. **Say to Claude:** *"Initialize the project"*
 
-   > *"I can see you've filled in your PRD and TAD. Would you like me to initialize the project configuration automatically?"*
-
-4. **Say "yes" and Claude will:**
-   - Extract project details from your PRD and TAD
+   Claude will:
+   - Read your PRD and TAD
+   - Extract project details (name, platform, tech stack, features, etc.)
    - Configure CLAUDE.md with your project specifics
    - Rename this README to WORKFLOW.md (for developers)
    - Create a new project-specific README based on your specs
@@ -316,11 +315,11 @@ MIT License - See LICENSE file for details
 2. **Use this template** to create your project
 3. **Fill in your specs** (docs/PRD.md, docs/TAD.md)
 4. **Open Claude Code** in the project directory
-5. **Claude auto-detects and asks:** *"Would you like me to initialize the project?"*
-6. **Say "yes"** and Claude handles everything
+5. **Say:** *"Initialize the project"*
 
 That's it! Claude will:
-- Configure the project from your specs
+- Extract everything from your PRD and TAD
+- Configure CLAUDE.md automatically
 - This README becomes WORKFLOW.md
 - A new project-specific README is created
 - Ask: *"Ready to break down your PRD into tasks?"*
