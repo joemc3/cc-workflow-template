@@ -80,11 +80,21 @@ That's it! Your project is initialized and ready to start building.
 
 **Already have a project?** You can apply this workflow to existing projects, even if you're already using GitHub issues or tracking work in docs.
 
-See **[MIGRATION.md](MIGRATION.md)** for detailed guidance, or run:
+### Quick Bootstrap
 
-```bash
-/project-migrate
+In your existing project, open Claude Code and say:
+
 ```
+I want to migrate to the CCPM workflow. Please fetch the migration tools from:
+https://github.com/YOUR_USERNAME/cc-workflow-template
+
+Download MIGRATION.md and .claude/commands/project-migrate.md to my project,
+then run /project-migrate to start the migration.
+```
+
+Claude will fetch the migration files and guide you through the entire process.
+
+### What Gets Migrated
 
 This interactive assistant will help you:
 - Import existing GitHub issues into the workflow
@@ -99,7 +109,7 @@ This interactive assistant will help you:
 - "Mix of issues and doc-based tracking"
 - "No formal tracking at all"
 
-The migration guide includes prompt templates you can use with Claude to automate the process.
+See **[MIGRATION.md](MIGRATION.md)** for detailed guidance and manual bootstrap instructions.
 
 ---
 

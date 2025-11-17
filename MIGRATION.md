@@ -2,9 +2,71 @@
 
 This guide helps you apply the CCPM workflow to an existing project. No matter how your work is currently tracked, you can migrate smoothly.
 
-## Quick Start
+## Getting Started
 
-Run the automated migration assistant:
+**If you're in an existing project and want to migrate to this workflow**, you first need to get the migration tools. Here's the easiest way:
+
+### Bootstrap Migration (Recommended)
+
+Open Claude Code in your existing project and say:
+
+```
+I want to migrate my project to the CCPM workflow. Please help me:
+
+1. Fetch the migration guide and tools from this template repository:
+   https://github.com/YOUR_USERNAME/cc-workflow-template
+
+   Specifically download:
+   - MIGRATION.md → save to project root
+   - .claude/commands/project-migrate.md → save to .claude/commands/
+
+2. Create .claude/commands/ directory if it doesn't exist
+
+3. Once the files are in place, run /project-migrate to start the migration
+
+Can you do this for me?
+```
+
+Claude will:
+- Fetch the migration files from the template repo
+- Put them in the right locations
+- Run the migration assistant to help you migrate your project
+
+### Manual Bootstrap (Alternative)
+
+If you prefer to do it manually:
+
+1. **Download migration files:**
+   ```bash
+   # Create directory if needed
+   mkdir -p .claude/commands
+
+   # Download MIGRATION.md
+   curl -o MIGRATION.md https://raw.githubusercontent.com/YOUR_USERNAME/cc-workflow-template/main/MIGRATION.md
+
+   # Download migration command
+   curl -o .claude/commands/project-migrate.md https://raw.githubusercontent.com/YOUR_USERNAME/cc-workflow-template/main/.claude/commands/project-migrate.md
+   ```
+
+2. **Run the migration:**
+   ```bash
+   /project-migrate
+   ```
+
+### What Happens Next
+
+Once you have the migration files in place and run `/project-migrate`, Claude will:
+- Ask questions about your current project state
+- Scan existing issues and docs
+- Import/create GitHub issues and BEADS entries
+- Set up the full CCPM workflow
+- Guide you through customization
+
+---
+
+## Quick Start (After Bootstrap)
+
+Once you have `/project-migrate` available, run it:
 ```bash
 /project-migrate
 ```
