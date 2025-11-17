@@ -21,25 +21,42 @@ Load sections with @ references as needed during implementation.
 
 ## Project Tracking
 
-All status tracked in BEADS + CCPM (GitHub Issues).
+**Hybrid tracking system for maximum visibility:**
 
-**Current epics:**
-View with: `~/.local/bin/bd list --type epic` or `gh issue list --label epic`
+- **GitHub Issues** - Epics AND major tasks (visible to all)
+- **BEADS** - Rich metadata, dependencies, agent memory (synced to git)
+
+### Tracking Model
+
+```
+GitHub Issue #1 (Epic: Authentication)
+  ├─ GitHub Issue #2 (Task: DB Schema) ←→ BEADS bd-a1b2
+  ├─ GitHub Issue #3 (Task: Signup API) ←→ BEADS bd-c3d4
+  └─ GitHub Issue #4 (Task: Login API) ←→ BEADS bd-e5f6
+```
+
+**Why this works:**
+- ✅ Humans see everything on GitHub (no BEADS knowledge needed)
+- ✅ Agents get rich dependency tracking via BEADS
+- ✅ Multiple agents can work in parallel (separate feature branches)
+- ✅ Easy handoff between agents/humans (GitHub has all context)
 
 **Check status:**
 ```bash
+# For humans (GitHub visibility)
+gh issue list --label epic                # All epics
+gh issue list --label task                # All tasks
+gh pr list                                # Open pull requests
+
+# For agents (BEADS tracking)
 ~/.local/bin/bd ready --limit 5           # Available work
 ~/.local/bin/bd list --status in_progress # Active work
 ~/.local/bin/bd blocked                   # Blocked tasks
 ~/.local/bin/bd stats                     # Statistics
-gh pr list                                # Open pull requests
-```
 
-**GitHub Issues = Source of Truth**
-- All epics tracked as GitHub issues
-- Use `/pm:issue-start <number>` to begin work
-- Feature branches created automatically
-- BEADS tracks local state between sessions
+# Dashboard view (combines both)
+/pm:dashboard                             # Full project status
+```
 
 ## Session Start Protocol (AUTOMATIC)
 
@@ -101,11 +118,36 @@ gh pr list  # Check open PRs
 
 1. **Ask about completed work:**
    - "Which issues were completed in this session?"
-   - For each: `~/.local/bin/bd close <id> --reason "Description of what was done"`
+   - For each completed issue:
+     ```bash
+     # Update BEADS
+     ~/.local/bin/bd close <beads-id> --reason "Description of what was done"
+
+     # Update GitHub issue (close with completion comment)
+     gh issue close <github-number> --comment "✅ Completed
+
+     [Summary of what was done]
+     [Files changed]
+     [Next steps or related issues]
+
+     Completed in commit/branch: [details]"
+     ```
 
 2. **Ask about in-progress work:**
    - "Which issues are still in progress?"
-   - For each: `~/.local/bin/bd update <id> --notes "Current state and next steps"`
+   - For each in-progress issue:
+     ```bash
+     # Update BEADS
+     ~/.local/bin/bd update <beads-id> --notes "Current state and next steps"
+
+     # Update GitHub issue (add progress comment)
+     gh issue comment <github-number> --body "**Progress Update:**
+
+     [What was done this session]
+     [Current state]
+     [What's left to do]
+     [Any blockers discovered]"
+     ```
 
 3. **Sync BEADS to git:**
    ```bash
@@ -113,31 +155,45 @@ gh pr list  # Check open PRs
    git add .beads/
    git commit -m "chore(session): update issue tracking
 
-   Completed: [list completed issue IDs]
-   In Progress: [list in-progress issue IDs]"
+   Completed: [list completed issue IDs and GitHub #s]
+   In Progress: [list in-progress issue IDs and GitHub #s]"
    git push
    ```
 
-4. **Update GitHub issues (if working via CCPM):**
-   - If issue was started with `/pm:issue-start <number>`:
-     ```bash
-     /pm:issue-sync <number>
-     ```
-
-5. **Ask about Pull Request:**
+4. **Ask about Pull Request:**
    - "Do you want to create a Pull Request? (yes/no)"
    - If yes:
      ```bash
-     gh pr create --title "Title" --body "Description" --base main
+     gh pr create \
+       --title "feat/fix(scope): description" \
+       --body "## Summary
+       [Brief description]
+
+       ## Part of
+       Epic #N: [Epic name]
+       Closes #M
+
+       ## Test Plan
+       - [ ] [Test item 1]
+       - [ ] [Test item 2]
+
+       🤖 Generated with [Claude Code](https://claude.com/claude-code)" \
+       --base main
      ```
    - If no: Feature branch remains for next session
 
-6. **Show next work:**
+5. **Show next work:**
    ```bash
    ~/.local/bin/bd ready --limit 3
    ```
 
-7. **Summary:** Display what was accomplished, what's next, current branch
+6. **Session Summary:** Display:
+   - ✅ Completed issues (BEADS IDs + GitHub #s)
+   - 📝 In-progress issues
+   - 🔀 Pull requests created
+   - 🎯 Next available work
+   - 📊 Epic progress percentage
+   - 🌿 Current branch status
 
 ## Recovery from Improper Session End
 
@@ -162,6 +218,27 @@ git status  # Shows uncommitted changes
 
 **Preferred Workflow:** Use GitHub issues as source of truth
 
+### Breaking Down Epics (Automated)
+
+When you ask Claude to break down an epic from your PRD/TAD:
+
+```bash
+# Claude runs this automatically:
+/pm:epic-breakdown
+```
+
+This command will:
+1. Read your PRD/TAD/specs
+2. Identify major features (epics)
+3. Create GitHub issue for the epic (labeled `epic`)
+4. Create GitHub issues for each task (labeled `task`)
+5. Create corresponding BEADS entries
+6. Set up dependencies between tasks
+7. Commit everything to git
+8. Show you the breakdown for approval
+
+**Result:** Epic + tasks visible on GitHub, tracked in BEADS, ready to work on.
+
 ### Starting Work on a GitHub Issue
 
 ```bash
@@ -170,8 +247,9 @@ git status  # Shows uncommitted changes
 
 This command:
 - Creates a feature branch (e.g., `feature/issue-123`)
-- Creates a git worktree in `../epic-<name>/`
+- Creates a git worktree in `../issue-<number>-<name>/`
 - Changes to that directory
+- Updates BEADS status to `in_progress`
 - Loads issue context
 
 **IMPORTANT:** All work should be done in the worktree, NOT on main branch.
@@ -184,23 +262,26 @@ This command:
 
 # Track locally in BEADS
 ~/.local/bin/bd update <beads-id> --notes "Progress update"
+
+# Create new tasks discovered during work
+/pm:task-create "Fix bug in auth validation" --parent <epic-number> --priority 1
 ```
 
 ### Checking Status
 
 ```bash
-/pm:status        # Overall project dashboard
-/pm:standup       # Daily standup report
-/pm:epic-show <epic-name>  # Epic details
-/pm:next          # Next priority task
+/pm:dashboard     # Full project dashboard (epics, tasks, progress)
+/pm:status        # Overall project status
+/pm:next          # Next priority task to work on
 ```
 
 ### Why This Workflow?
 
 - **Feature branches prevent conflicts** - Multiple agents can work simultaneously
 - **Worktrees isolate work** - No branch switching needed
-- **GitHub issues provide visibility** - Team knows what's being worked on
-- **BEADS provides agent memory** - Session-to-session continuity
+- **GitHub issues provide visibility** - Team knows what's being worked on (no BEADS needed)
+- **BEADS provides agent memory** - Session-to-session continuity with rich metadata
+- **Automatic syncing** - Progress automatically posted to GitHub for human visibility
 
 ## Priority Levels
 
@@ -259,7 +340,19 @@ Always reference issues:
 **Note:** BEADS CLI is at `~/.local/bin/bd` - use full path in all commands
 
 ```bash
-# Most used BEADS commands
+# Epic & Task Management (CCPM Slash Commands)
+/pm:epic-breakdown                        # Break down PRD into epics & tasks (auto)
+/pm:task-create "..." --parent N --priority P  # Create new task
+/pm:issue-start <number>                  # Start work (creates feature branch)
+/pm:issue-sync <number>                   # Sync progress to GitHub
+/pm:dashboard                             # Full project dashboard
+/pm:status                                # Project status summary
+/pm:next                                  # Next priority task
+
+# Context Loading
+/context:prime                            # Load project context (PRD/TAD/specs)
+
+# BEADS Commands (for advanced usage)
 ~/.local/bin/bd ready --limit 5           # Show available work
 ~/.local/bin/bd create "..." -t T -p N   # Create issue
 ~/.local/bin/bd update <id> --status S   # Update status
@@ -268,12 +361,13 @@ Always reference issues:
 ~/.local/bin/bd dep add <c> <p> --type T # Add dependency
 ~/.local/bin/bd stats                    # Statistics
 ~/.local/bin/bd list --status in_progress # What's being worked on
+~/.local/bin/bd sync                     # Sync with git
 
-# Most used CCPM commands
-/pm:issue-start <number>    # Start work (creates feature branch)
-/pm:issue-sync <number>     # Sync progress to GitHub
-/pm:status                  # Project dashboard
-/pm:next                    # Next priority work
+# GitHub Commands (if needed manually)
+gh issue list --label epic               # List all epics
+gh issue list --label task               # List all tasks
+gh pr list                               # List open pull requests
+gh issue view <number>                   # View issue details
 ```
 
 ## Need Help?
