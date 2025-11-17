@@ -55,20 +55,25 @@ This repository provides a complete, battle-tested workflow for managing softwar
 2. **Fill in your project specifications:**
    - `docs/PRD.md` - What you're building (product requirements)
    - `docs/TAD.md` - How you're building it (technical architecture)
-   - `docs/specs/*.md` - Detailed component specs
+   - `docs/specs/*.md` - Detailed component specs (optional to start)
 
    *Don't worry about being perfect - you can iterate with Claude!*
 
 3. **Open Claude Code in the project directory**
 
-4. **Say to Claude:** *"I've set up the project. Can you help me get started?"*
+   Claude will automatically detect this is a new project and say:
 
-   Claude will automatically:
-   - Initialize BEADS if needed
-   - Load your project context
-   - Show you what to do next
+   > *"I can see you've filled in your PRD and TAD. Would you like me to initialize the project configuration automatically?"*
 
-That's it! You're ready to start building.
+4. **Say "yes" and Claude will:**
+   - Extract project details from your PRD and TAD
+   - Configure CLAUDE.md with your project specifics
+   - Rename this README to WORKFLOW.md (for developers)
+   - Create a new project-specific README based on your specs
+   - Commit everything to git
+   - Ask: *"Ready to break down your PRD into tasks?"*
+
+That's it! Your project is initialized and ready to start building.
 
 ## Project Structure
 
@@ -311,8 +316,13 @@ MIT License - See LICENSE file for details
 2. **Use this template** to create your project
 3. **Fill in your specs** (docs/PRD.md, docs/TAD.md)
 4. **Open Claude Code** in the project directory
-5. **Say:** *"I've set up the project. Let's get started!"*
+5. **Claude auto-detects and asks:** *"Would you like me to initialize the project?"*
+6. **Say "yes"** and Claude handles everything
 
-That's it! Claude will take it from there.
+That's it! Claude will:
+- Configure the project from your specs
+- This README becomes WORKFLOW.md
+- A new project-specific README is created
+- Ask: *"Ready to break down your PRD into tasks?"*
 
-**Remember:** You talk, Claude works. That's the whole idea.
+**Remember:** You write the specs, Claude does the rest. That's the whole idea.
