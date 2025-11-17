@@ -7,87 +7,68 @@ This repository provides a complete, battle-tested workflow for managing softwar
 - **BEADS** - Local issue tracking with git-backed persistence
 - **CCPM** (Claude Code Project Management) - GitHub Issues integration and multi-agent coordination
 
-## What This Template Provides
+## What This Gives You
 
-### 1. Session Management Protocols
-- **Automatic session start** - Syncs state, shows available work, loads context
-- **Automatic session end** - Captures progress, syncs issues, commits tracking data
-- **Recovery from interruptions** - Handles improper session endings gracefully
+**Simple, natural conversation with Claude Code:**
 
-### 2. Issue Tracking Integration
-- **BEADS** for local, git-backed issue tracking
-- **GitHub Issues** as source of truth for team visibility
-- **Bi-directional sync** between BEADS and GitHub
-- **Dependency tracking** and work discovery patterns
+- *"Break down my PRD into tasks"* → Claude creates GitHub issues for all your work
+- *"Let's work on authentication"* → Claude sets up the workspace and starts coding
+- *"Show me what's done"* → Claude displays project status and progress
+- *"I'm done for today"* → Claude saves everything and shows what's next
 
-### 3. Multi-Agent Coordination
-- **Feature branch workflow** with git worktrees
-- **Isolation** - Multiple agents work simultaneously without conflicts
-- **Clear handoffs** - Issue status and progress always visible
+**Behind the scenes, this template handles:**
 
-### 4. Specification-Driven Development
-- **Placeholder docs** ready for your project specs (PRD, TAD, component specs)
-- **@-reference pattern** - Claude can load specific sections on demand
-- **Traceability** - All work traces back to requirements
+1. **Project tracking** - BEADS (local) + GitHub Issues (team visibility)
+2. **Multi-agent coordination** - Multiple agents work in parallel without conflicts
+3. **Session memory** - Claude remembers context between sessions
+4. **Automatic workflows** - No manual git commands or issue tracking
+
+**The result:** You focus on building, Claude handles the workflow.
 
 ## Quick Start
 
 ### Prerequisites
 
-1. **Install BEADS CLI:**
+**Verify you have the required tools installed:**
+
+1. **BEADS CLI** - Issue tracking tool
    ```bash
-   # Follow installation instructions at:
-   # https://github.com/steveyegge/beads
-
-   # Verify installation
-   ~/.local/bin/bd --version
+   bd --version
    ```
+   If not installed: https://github.com/steveyegge/beads
 
-2. **Install GitHub CLI:**
+2. **GitHub CLI** - GitHub integration
    ```bash
-   # macOS
-   brew install gh
-
-   # Verify and authenticate
-   gh auth login
+   gh auth status
    ```
+   If not installed: `brew install gh` (macOS) then `gh auth login`
 
-3. **Add BEADS to PATH** (add to `~/.zshrc` or `~/.bashrc`):
-   ```bash
-   export PATH="$PATH:$HOME/.local/bin"
-   ```
+> **Note:** If `bd --version` works, BEADS is already in your PATH - you're good to go!
 
 ### Setup Your Project
 
-1. **Clone this template:**
-   ```bash
-   git clone https://github.com/[YOUR_USERNAME]/cc-workflow-template.git my-project
-   cd my-project
-   ```
+1. **Use this template on GitHub:**
+   - Click "Use this template" button on GitHub
+   - Name your new project
+   - Clone it locally
 
-2. **Customize for your project:**
-   ```bash
-   # Update repository settings
-   gh repo edit --name my-project-name
+2. **Fill in your project specifications:**
+   - `docs/PRD.md` - What you're building (product requirements)
+   - `docs/TAD.md` - How you're building it (technical architecture)
+   - `docs/specs/*.md` - Detailed component specs
 
-   # Customize CLAUDE.md
-   # - Replace [YOUR_PROJECT] with your project name
-   # - Fill in platform, backend, target audience
-   # - Update development guidelines
+   *Don't worry about being perfect - you can iterate with Claude!*
 
-   # Create your specification documents
-   # - docs/PRD.md - Product requirements
-   # - docs/TAD.md - Technical architecture
-   # - docs/specs/ - Component specifications
-   ```
+3. **Open Claude Code in the project directory**
 
-3. **Initialize BEADS** (if needed):
-   ```bash
-   ~/.local/bin/bd init
-   ```
+4. **Say to Claude:** *"I've set up the project. Can you help me get started?"*
 
-4. **Start your first Claude Code session:**
-   Open Claude Code in this directory and the session start protocol will run automatically.
+   Claude will automatically:
+   - Initialize BEADS if needed
+   - Load your project context
+   - Show you what to do next
+
+That's it! You're ready to start building.
 
 ## Project Structure
 
@@ -117,53 +98,74 @@ cc-workflow-template/
 
 ## How to Use This Workflow
 
-### Daily Workflow
+### Your First Session
 
-**Every session starts automatically with:**
-1. Sync latest code and issue state
-2. Show available work
-3. Check for blockers
-4. Ask which issue to work on
+**You:** *"Break down my PRD into epics and tasks"*
 
-**During work:**
-- Issues tracked locally in BEADS
-- Synced to GitHub for team visibility
-- Work happens in feature branches (via worktrees)
-- Progress captured at milestones
+**Claude:**
+- Reads your PRD, TAD, and specs
+- Creates GitHub issues for each epic and task
+- Sets up dependencies
+- Shows you the breakdown
+- Asks: *"Which issue would you like to work on?"*
 
-**Every session ends with:**
-1. Capture completed work
-2. Update in-progress status
-3. Sync BEADS to git
-4. Optional PR creation
-5. Preview next work
+### Working on Features
 
-### Common Commands
+**You:** *"Let's work on issue #2"*
 
-**BEADS (Issue Tracking):**
-```bash
-~/.local/bin/bd ready --limit 5           # Show available work
-~/.local/bin/bd create "Title" -t TYPE -p PRIORITY -l "labels"
-~/.local/bin/bd update <id> --status STATUS
-~/.local/bin/bd close <id> --reason "Done"
-~/.local/bin/bd show <id>                 # View details
-~/.local/bin/bd stats                     # Statistics
-```
+**Claude:**
+- Creates a feature branch for you
+- Sets up an isolated workspace
+- Updates issue status to "in progress"
+- Posts to GitHub so others know you're working on it
+- Starts implementing
 
-**CCPM (GitHub Integration):**
-```bash
-/pm:issue-start <number>    # Start work on GitHub issue (creates feature branch)
-/pm:issue-sync <number>     # Sync progress to GitHub
-/pm:status                  # Project dashboard
-/pm:next                    # Next priority work
-```
+### During Development
 
-**Session Management:**
-```bash
-/context:prime              # Load project context
-```
+**What Claude does automatically:**
+- Tracks progress in both BEADS (local) and GitHub (team visibility)
+- Works in feature branches to avoid conflicts
+- Periodically syncs status to GitHub
+- Discovers and creates new tasks when finding bugs/TODOs
 
-See [CLAUDE.md](./CLAUDE.md) for complete command reference and workflow details.
+**What you can say:**
+- *"Show me the project status"* - See what's done, what's in progress, what's next
+- *"Create a PR for this work"* - When you're ready to merge
+- *"What's blocking us?"* - See all blocked tasks
+- *"What should we work on next?"* - Get priority recommendations
+
+### Ending Your Session
+
+**You:** *"I'm done for today"* or *"End session"*
+
+**Claude:**
+- Asks what you completed
+- Asks what's still in progress
+- Updates GitHub issues with progress comments
+- Commits all tracking data to git
+- Shows what's ready for next session
+
+**Important:** Always say "done" or "end session" - don't just close the window! This ensures all your progress is saved.
+
+### Multi-Agent / Team Collaboration
+
+**For humans on your team:**
+- Everything is visible on GitHub - no special tools needed
+- See all epics and tasks as GitHub issues
+- Progress updates posted as comments
+- No BEADS knowledge required
+
+**For multiple Claude agents:**
+- Each works in isolated feature branches
+- BEADS synced via git provides shared context
+- No conflicts when working in parallel
+- Easy handoffs between sessions
+
+### That's It!
+
+You talk to Claude in natural language. Claude handles all the commands, git operations, issue tracking, and status updates.
+
+For technical details, see [CLAUDE.md](./CLAUDE.md).
 
 ## Customization Guide
 
@@ -201,70 +203,48 @@ gh repo edit --description "Your project description"
 gh repo edit --homepage "https://your-project.com"
 ```
 
-## Key Workflow Features
+## Key Features
 
-### Feature Branch + Worktree Workflow
+### Automatic Conflict Prevention
 
-When starting work on a GitHub issue:
-```bash
-/pm:issue-start <number>
-```
+When you say *"Let's work on issue #2"*, Claude:
+- Creates an isolated workspace (feature branch + worktree)
+- No conflicts with other agents/developers working on different issues
+- Each issue gets its own clean environment
 
-This creates:
-1. Feature branch: `feature/issue-<number>`
-2. Git worktree in: `../epic-<name>/`
-3. Isolated workspace for that feature
+### Session Memory
 
-Multiple agents can work simultaneously without conflicts.
+**Claude remembers between sessions:**
+- What you were working on
+- What's completed vs in-progress
+- Dependencies between tasks
+- Discovered work that needs to be done
 
-### Session Protocols
+**How it works:**
+- BEADS database synced to git (local agent memory)
+- GitHub issues (team visibility)
+- Both stay in sync automatically
 
-**Session Start** (Automatic):
-- Pulls latest git changes
-- Syncs BEADS database
-- Shows ready work and blockers
-- Loads project context
+### Work Discovery
 
-**Session End** (Say "done" or "end session"):
-- Captures completed/in-progress work
-- Syncs BEADS to git
-- Commits tracking updates
-- Optionally creates PR
+**You:** *"I found a bug while working on the login feature"*
 
-### Issue Discovery
+**Claude:**
+- Creates a new task for the bug
+- Links it to current work (traceability)
+- Adds to backlog or marks as blocker
+- Syncs to GitHub for team visibility
 
-When finding bugs or follow-up work during development:
-```bash
-~/.local/bin/bd create "Found issue" -t bug -p 2
-~/.local/bin/bd dep add <new-id> <current-id> --type discovered-from
-```
+### Priority Management
 
-Maintains traceability of all discovered work.
-
-## Advanced Features
-
-### Priority Levels
+Claude understands priorities:
 - **P0** - Critical, drop everything
 - **P1** - High priority, core features
 - **P2** - Normal work (default)
 - **P3** - Low priority
 - **P4** - Backlog
 
-### Dependency Types
-- `blocks` - Hard blocker (must complete first)
-- `parent-child` - Hierarchical relationship
-- `discovered-from` - Found during work
-- `related` - Soft connection
-
-### Commit Message Format
-```
-type(scope): description
-
-fixes bd-xyz
-closes #123
-```
-
-Types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`
+**You:** *"What's the highest priority work?"* → Claude shows P0/P1 tasks first
 
 ## Resources
 
@@ -274,32 +254,46 @@ Types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`
 
 ## Best Practices
 
-1. **Never skip session end protocol** - Say "done" instead of closing window
-2. **Work in feature branches** - Use `/pm:issue-start` for GitHub issues
-3. **Update issue status** - Keep BEADS in sync with actual progress
-4. **Reference issues in commits** - Use `fixes bd-xyz` or `closes #123`
-5. **Document as you go** - Update specs when requirements change
-6. **Sync regularly** - Push BEADS changes so other agents see progress
+1. **Always end sessions properly** - Say *"done"* or *"end session"* instead of closing the window
+2. **Fill in your specs** - Better specs = better Claude suggestions
+3. **Iterate with Claude** - Don't worry about perfect specs upfront - refine as you go
+4. **Trust the workflow** - Let Claude handle git, branches, and issue tracking
+5. **Check status regularly** - Say *"show me project status"* to stay oriented
 
 ## Troubleshooting
 
-**Session interrupted without proper end?**
-```bash
-git status  # See uncommitted changes
-~/.local/bin/bd list --status in_progress  # See active work
-# Commit changes and sync BEADS manually
-```
+### "I closed the window without ending the session!"
 
-**BEADS and GitHub out of sync?**
-```bash
-~/.local/bin/bd sync
-/pm:issue-sync <number>
-```
+**No problem!** Next session, Claude will detect uncommitted work and ask what to do with it.
 
-**Multiple agents conflicting?**
-- Check open PRs: `gh pr list`
-- Check active work: `~/.local/bin/bd list --status in_progress`
-- Use feature branches to isolate work
+**You:** *"I accidentally closed without ending the session"*
+
+**Claude:**
+- Detects the incomplete session
+- Shows what was in progress
+- Asks if you want to continue or commit the work
+- Recovers gracefully
+
+### "Multiple agents seem to be working on the same thing"
+
+**You:** *"What's everyone working on?"*
+
+**Claude:**
+- Shows all in-progress work
+- Shows who's working on what (via GitHub)
+- Helps you pick something that won't conflict
+
+The feature branch workflow prevents actual conflicts, but this helps with coordination.
+
+### "Things seem out of sync"
+
+**You:** *"Can you sync everything?"*
+
+**Claude:**
+- Pulls latest changes
+- Syncs BEADS with git
+- Updates GitHub issue status
+- Shows current state
 
 ## Contributing to This Template
 
@@ -311,4 +305,14 @@ MIT License - See LICENSE file for details
 
 ---
 
-**Ready to start?** Customize CLAUDE.md and docs/, then open Claude Code to begin your first session!
+## Ready to Start?
+
+1. **Install the prerequisites** (BEADS and GitHub CLI)
+2. **Use this template** to create your project
+3. **Fill in your specs** (docs/PRD.md, docs/TAD.md)
+4. **Open Claude Code** in the project directory
+5. **Say:** *"I've set up the project. Let's get started!"*
+
+That's it! Claude will take it from there.
+
+**Remember:** You talk, Claude works. That's the whole idea.
