@@ -1,0 +1,28 @@
+# SQLite databases
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Daemon runtime files
+daemon.lock
+daemon.log
+daemon.pid
+bd.sock
+
+# Legacy database files
+db.sqlite
+bd.db
+
+# BEADS sync/merge working files (internal use only)
+beads.base.jsonl
+beads.base.meta.json
+beads.left.jsonl
+beads.left.meta.json
+beads.right.jsonl
+beads.right.meta.json
+
+# Keep only the source of truth files
+!issues.jsonl
+!metadata.json
+!config.yaml
