@@ -73,6 +73,12 @@ gh pr list                                # Open pull requests
 - User will say "Initialize the project" when ready
 - Wait for user instruction before initializing
 
+**If migrating an existing project:**
+- User will say "Migrate the project" or run `/project-migrate`
+- See docs/MIGRATION.md for guidance
+- Follow the migration workflow (one-time setup)
+- After migration, skip to Step 1 for all future sessions
+
 **If project is already initialized:**
 - Continue with normal session start below (Steps 1-4)
 
@@ -365,6 +371,7 @@ Always reference issues:
 ```bash
 # Project Setup (Run Once)
 /project:init                             # Initialize project from PRD/TAD (auto-detected)
+/project-migrate                          # Migrate existing project to workflow
 
 # Epic & Task Management (CCPM Slash Commands)
 /pm:epic-breakdown                        # Break down PRD into epics & tasks (auto)

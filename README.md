@@ -74,6 +74,35 @@ This repository provides a complete, battle-tested workflow for managing softwar
 
 That's it! Your project is initialized and ready to start building.
 
+---
+
+## Migrating an Existing Project
+
+**Already have a project?** You can apply this workflow to existing projects, even if you're already using GitHub issues or tracking work in docs.
+
+See **[docs/MIGRATION.md](docs/MIGRATION.md)** for detailed guidance, or run:
+
+```bash
+/project-migrate
+```
+
+This interactive assistant will help you:
+- Import existing GitHub issues into the workflow
+- Extract tasks from documentation (CLAUDE.md, README, etc.)
+- Create minimal PRD/TAD if you don't have formal specs
+- Set up BEADS tracking for existing work
+- Handle work in progress gracefully
+
+**Common scenarios covered:**
+- "We have GitHub issues but no BEADS"
+- "Work is tracked in CLAUDE.md/README only"
+- "Mix of issues and doc-based tracking"
+- "No formal tracking at all"
+
+The migration guide includes prompt templates you can use with Claude to automate the process.
+
+---
+
 ## Project Structure
 
 ```
