@@ -127,9 +127,41 @@ git commit -m "feat: add CCPM slash commands"
 git push
 ```
 
+### Update Your CLAUDE.md
+
+**IMPORTANT:** The slash commands won't be useful unless your CLAUDE.md tells Claude how to use them.
+
+You need to add these sections from the template's CLAUDE.md to your project's CLAUDE.md:
+
+1. **CCPM Integration section** - Explains the `/pm-*` commands and workflow
+2. **Session Start Protocol** - Updated to use `/context-prime`
+3. **Session End Protocol** - Uses `/pm-issue-sync` for progress updates
+4. **During Development section** - Shows how to use `/pm-issue-sync`, `/pm-task-create`
+5. **Quick Command Reference** - Lists all available `/pm-*` commands
+
+**Recommended approach - ask Claude:**
+
+```
+I've added the CCPM slash commands to my project. Now I need to update my CLAUDE.md to include the CCPM workflow sections.
+
+Please fetch these sections from the template CLAUDE.md:
+https://github.com/YOUR_USERNAME/cc-workflow-template/blob/main/CLAUDE.md
+
+Add to my CLAUDE.md:
+1. The "CCPM Integration" section
+2. Update "Session Start Protocol" to include /context-prime
+3. Update "Session End Protocol" to include /pm-issue-sync
+4. The "During Development" section
+5. Update "Quick Command Reference" with all /pm-* commands
+
+Merge these with my existing CLAUDE.md sections, keeping my project-specific content.
+```
+
+Alternatively, you can manually copy these sections from the template CLAUDE.md.
+
 ### Verify Installation
 
-After installing, test that the commands work:
+After installing and updating CLAUDE.md, test that the commands work:
 
 ```bash
 /pm-dashboard    # Should show project status
