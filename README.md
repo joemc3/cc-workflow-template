@@ -74,6 +74,45 @@ This repository provides a complete, battle-tested workflow for managing softwar
 
 That's it! Your project is initialized and ready to start building.
 
+---
+
+## Migrating an Existing Project
+
+**Already have a project?** You can apply this workflow to existing projects, even if you're already using GitHub issues or tracking work in docs.
+
+### Quick Bootstrap
+
+In your existing project, open Claude Code and say:
+
+```
+I want to migrate to the CCPM workflow. Please fetch the migration tools from:
+https://github.com/YOUR_USERNAME/cc-workflow-template
+
+Download MIGRATION.md and .claude/commands/project-migrate.md to my project,
+then run /project-migrate to start the migration.
+```
+
+Claude will fetch the migration files and guide you through the entire process.
+
+### What Gets Migrated
+
+This interactive assistant will help you:
+- Import existing GitHub issues into the workflow
+- Extract tasks from documentation (CLAUDE.md, README, etc.)
+- Create minimal PRD/TAD if you don't have formal specs
+- Set up BEADS tracking for existing work
+- Handle work in progress gracefully
+
+**Common scenarios covered:**
+- "We have GitHub issues but no BEADS"
+- "Work is tracked in CLAUDE.md/README only"
+- "Mix of issues and doc-based tracking"
+- "No formal tracking at all"
+
+See **[MIGRATION.md](MIGRATION.md)** for detailed guidance and manual bootstrap instructions.
+
+---
+
 ## Project Structure
 
 ```

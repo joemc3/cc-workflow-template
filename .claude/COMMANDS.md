@@ -8,10 +8,31 @@ Complete reference of all commands available in the Claude Code PM system.
 
 ## Table of Contents
 
+- [Project Setup Commands](#project-setup-commands)
 - [Context Commands](#context-commands)
 - [Testing Commands](#testing-commands)
 - [Utility Commands](#utility-commands)
 - [Review Commands](#review-commands)
+
+## Project Setup Commands
+
+Commands for initializing and migrating projects.
+
+### `/project:init`
+- **Purpose**: Initialize a new project from PRD/TAD
+- **Usage**: `/project:init`
+- **Description**: Reads your PRD and TAD specifications, extracts project details (name, platform, tech stack, features), configures CLAUDE.md with project specifics, and sets up the project structure.
+- **When to use**: First-time setup of a new project using this template
+- **Output**: Configured CLAUDE.md, renamed README to WORKFLOW.md, new project-specific README
+- **Note**: This is a one-time setup command. After initialization, use normal session start protocols.
+
+### `/project-migrate`
+- **Purpose**: Migrate existing project to CCPM workflow
+- **Usage**: `/project-migrate`
+- **Description**: Interactive assistant that helps migrate existing projects to the CCPM workflow. Handles various scenarios: existing GitHub issues, work tracked in docs, mixed tracking, or no formal tracking. Imports issues, creates BEADS entries, generates minimal PRD/TAD if needed, and handles work in progress.
+- **When to use**: When applying this workflow to an existing project
+- **Output**: Migrated GitHub issues, BEADS tracking setup, updated documentation, migration summary
+- **Reference**: See [MIGRATION.md](../MIGRATION.md) for detailed scenarios and prompt templates
 
 ## Context Commands
 
