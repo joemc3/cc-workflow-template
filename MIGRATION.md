@@ -19,6 +19,13 @@ I want to migrate my project to the CCPM workflow. Please help me:
    Specifically download:
    - MIGRATION.md → save to project root
    - .claude/commands/project-migrate.md → save to .claude/commands/
+   - .claude/commands/pm-epic-breakdown.md → save to .claude/commands/
+   - .claude/commands/pm-task-create.md → save to .claude/commands/
+   - .claude/commands/pm-issue-start.md → save to .claude/commands/
+   - .claude/commands/pm-issue-sync.md → save to .claude/commands/
+   - .claude/commands/pm-dashboard.md → save to .claude/commands/
+   - .claude/commands/pm-status.md → save to .claude/commands/
+   - .claude/commands/context-prime.md → save to .claude/commands/
 
 2. Create .claude/commands/ directory if it doesn't exist
 
@@ -29,7 +36,7 @@ Can you do this for me?
 
 Claude will:
 - Fetch the migration files from the template repo
-- Put them in the right locations
+- Put them in the right locations (all CCPM slash commands)
 - Run the migration assistant to help you migrate your project
 
 ### Manual Bootstrap (Alternative)
@@ -44,8 +51,16 @@ If you prefer to do it manually:
    # Download MIGRATION.md
    curl -o MIGRATION.md https://raw.githubusercontent.com/YOUR_USERNAME/cc-workflow-template/main/MIGRATION.md
 
-   # Download migration command
-   curl -o .claude/commands/project-migrate.md https://raw.githubusercontent.com/YOUR_USERNAME/cc-workflow-template/main/.claude/commands/project-migrate.md
+   # Download all CCPM slash commands
+   BASE_URL="https://raw.githubusercontent.com/YOUR_USERNAME/cc-workflow-template/main/.claude/commands"
+   curl -o .claude/commands/project-migrate.md "$BASE_URL/project-migrate.md"
+   curl -o .claude/commands/pm-epic-breakdown.md "$BASE_URL/pm-epic-breakdown.md"
+   curl -o .claude/commands/pm-task-create.md "$BASE_URL/pm-task-create.md"
+   curl -o .claude/commands/pm-issue-start.md "$BASE_URL/pm-issue-start.md"
+   curl -o .claude/commands/pm-issue-sync.md "$BASE_URL/pm-issue-sync.md"
+   curl -o .claude/commands/pm-dashboard.md "$BASE_URL/pm-dashboard.md"
+   curl -o .claude/commands/pm-status.md "$BASE_URL/pm-status.md"
+   curl -o .claude/commands/context-prime.md "$BASE_URL/context-prime.md"
    ```
 
 2. **Run the migration:**
@@ -61,6 +76,67 @@ Once you have the migration files in place and run `/project-migrate`, Claude wi
 - Import/create GitHub issues and BEADS entries
 - Set up the full CCPM workflow
 - Guide you through customization
+
+---
+
+## Adding CCPM to Existing BEADS Projects
+
+**Your situation:** You already migrated and have BEADS working, but don't have the CCPM slash commands (`/pm-dashboard`, `/pm-issue-start`, etc.).
+
+This is a quick fix - just download the missing commands:
+
+### Quick Install (Recommended)
+
+Open Claude Code in your project and say:
+
+```
+I already have BEADS working but need the CCPM slash commands. Please fetch these from the template repository:
+https://github.com/YOUR_USERNAME/cc-workflow-template
+
+Download to .claude/commands/:
+- pm-epic-breakdown.md
+- pm-task-create.md
+- pm-issue-start.md
+- pm-issue-sync.md
+- pm-dashboard.md
+- pm-status.md
+- context-prime.md
+
+Then commit them to git.
+```
+
+### Manual Install
+
+```bash
+# Create directory if it doesn't exist
+mkdir -p .claude/commands
+
+# Download CCPM slash commands
+BASE_URL="https://raw.githubusercontent.com/YOUR_USERNAME/cc-workflow-template/main/.claude/commands"
+curl -o .claude/commands/pm-epic-breakdown.md "$BASE_URL/pm-epic-breakdown.md"
+curl -o .claude/commands/pm-task-create.md "$BASE_URL/pm-task-create.md"
+curl -o .claude/commands/pm-issue-start.md "$BASE_URL/pm-issue-start.md"
+curl -o .claude/commands/pm-issue-sync.md "$BASE_URL/pm-issue-sync.md"
+curl -o .claude/commands/pm-dashboard.md "$BASE_URL/pm-dashboard.md"
+curl -o .claude/commands/pm-status.md "$BASE_URL/pm-status.md"
+curl -o .claude/commands/context-prime.md "$BASE_URL/context-prime.md"
+
+# Commit
+git add .claude/commands/
+git commit -m "feat: add CCPM slash commands"
+git push
+```
+
+### Verify Installation
+
+After installing, test that the commands work:
+
+```bash
+/pm-dashboard    # Should show project status
+/pm-status       # Quick status summary
+```
+
+If you get "command not found", check that the files are in `.claude/commands/` and have the correct names.
 
 ---
 
