@@ -111,7 +111,7 @@ git pull --rebase
 
 - If GitHub issue number provided: `/pm:issue-start <number>` (creates feature branch + worktree)
 - If BEADS ID provided: `bd update <id> --status in_progress` and create feature branch manually
-- If user says "break down the PRD": Run `/pm:epic-breakdown`
+- If user wants to break down an epic: Run `/pm:epic-breakdown`
 
 ## During Development
 
@@ -249,22 +249,26 @@ git status  # Shows uncommitted changes
 
 ### Breaking Down Epics (Automated)
 
-When you ask Claude to break down an epic from your PRD/TAD:
+Use this command to break down any epic into tasks:
 
 ```bash
-# Claude runs this automatically:
 /pm:epic-breakdown
 ```
 
+**Use cases:**
+- Initial PRD breakdown into multiple epics
+- Breaking down an existing epic into tasks
+- New feature requests or initiatives
+- Technical debt or refactoring epics
+
 This command will:
-1. Read your PRD/TAD/specs
-2. Identify major features (epics)
-3. Create GitHub issue for the epic (labeled `epic`)
-4. Create GitHub issues for each task (labeled `task`)
-5. Create corresponding BEADS entries
-6. Set up dependencies between tasks
-7. Commit everything to git
-8. Show you the breakdown for approval
+1. Gather context (from PRD/TAD, existing epic, or user description)
+2. Create GitHub issue for the epic (labeled `epic`)
+3. Create GitHub issues for each task (labeled `task`)
+4. Create corresponding BEADS entries
+5. Set up dependencies between tasks
+6. Commit everything to git
+7. Show you the breakdown for approval
 
 **Result:** Epic + tasks visible on GitHub, tracked in BEADS, ready to work on.
 
@@ -374,7 +378,7 @@ Always reference issues:
 /project-migrate                          # Migrate existing project to workflow
 
 # Epic & Task Management (CCPM Slash Commands)
-/pm:epic-breakdown                        # Break down PRD into epics & tasks (auto)
+/pm:epic-breakdown                        # Break down any epic into tasks
 /pm:task-create "..." --parent N --priority P  # Create new task
 /pm:issue-start <number>                  # Start work (creates feature branch)
 /pm:issue-sync <number>                   # Sync progress to GitHub
@@ -406,5 +410,5 @@ gh issue view <number>                   # View issue details
 ## Need Help?
 
 - BEADS: `bd quickstart` or `bd --help`
-- CCPM: `/pm:help`
+- CCPM: See Quick Command Reference section above
 - Specs: @docs/ directory
